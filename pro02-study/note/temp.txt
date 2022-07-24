@@ -1,0 +1,27 @@
+ public static ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+
+        if (list1 == null || list2 == null) {
+            //链表有一个null 尽可能返回一个不null的节点
+            return list1 == null ? list2 : list1;
+        }
+        //找到较小的节点 作为头部
+        ListNode head = list1.val <= list2.val ? list1 : list2;
+
+        ListNode curA = head.next;//代表一个head节点的下一个
+        ListNode curB = head == list1 ? head : list2;//代表另一个节点
+
+        ListNode next = head;//用于串起来所有的节点
+
+        while (curA != null && curB != null) {
+            if (curA.val <= curB.val) {//curA 向后面移动
+                next.next = curA;
+                curA = curA.next;
+            } else {
+                next.next = curB;
+                curB = curB.next;
+            }
+            next = next.next;
+        }
+        next.next = curA != null ? curA : curB;
+        return head;
+    }
